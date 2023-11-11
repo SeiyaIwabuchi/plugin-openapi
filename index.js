@@ -162,6 +162,7 @@ async function generateWorkflow (file, options) {
       if (swagger.paths[path][method].responses) {
         const response = Object.values(swagger.paths[path][method].responses)[0]
         const responseContent =  response.content?.[options.contentType]
+        if (!step.http.headers) step.http['headers'] = {}
         step.http.headers['accept'] = options.contentType
 
         if (response) {
