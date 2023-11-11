@@ -122,7 +122,6 @@ async function generateWorkflow (file, options) {
             case 'application/json':
               if (contentType == options.contentType) {
                 step.http.headers['Content-Type'] = contentType
-                step.http.headers['accept'] = contentType
                 step.http.json = body
               }
               break
@@ -163,6 +162,7 @@ async function generateWorkflow (file, options) {
       if (swagger.paths[path][method].responses) {
         const response = Object.values(swagger.paths[path][method].responses)[0]
         const responseContent =  response.content?.[options.contentType]
+        step.http.headers['accept'] = options.contentType
 
         if (response) {
           if (Object.keys(options.check).length !== 0) step.http.check = {}
